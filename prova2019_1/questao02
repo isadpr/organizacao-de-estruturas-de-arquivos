@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Registro Registro;
+
+struct Registro {
+    char cpf[15];
+    char curso[20];
+    char dataNacimento[11];
+    char sexo;
+    char email[40];
+    char opcaoQuadro;
+};
+
+int main(int argc, char *argv[]) {
+    FILE *arq = fopen("candidatos.csv", "r");
+    char linha[200];
+    struct Registro reg;
+    while (fgets(linha, sizeof(linha), arq)) {
+        leRegistro(&reg, linha);
+        if (strcmp(reg.cpf, argv[1]) == 0) {
+            printf("%s\n", reg.curso);
+            break;
+        }
+    }
+    fclose(arq);
+    return 0;
+}
